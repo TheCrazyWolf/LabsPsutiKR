@@ -48,7 +48,7 @@
                         Width="400"
                         ItemsSource="{Binding ListTasks}" 
                              SelectedItem="{Binding SelectedTask,
-                        UpdateSourceTrigger=PropertyChanged}"
+                                UpdateSourceTrigger=PropertyChanged}"
                              >
                     </ComboBox>
 
@@ -64,14 +64,18 @@
                         <TextBlock Text="X: "/>
                         <ListBox Height="220" Width="185"
                                  ItemsSource="{Binding ArrayX,
+                                    NotifyOnSourceUpdated=True,
                                     UpdateSourceTrigger=PropertyChanged}"
                                  >
                         </ListBox>
                         <TextBlock Text="Y: "/>
+
                         <ListBox Height="220" Width="189"
                                  ItemsSource="{Binding ArrayY,
+                                    NotifyOnSourceUpdated=True,
                                     UpdateSourceTrigger=PropertyChanged}">
                         </ListBox>
+                        
                     </StackPanel>
                 </StackPanel>
                 
