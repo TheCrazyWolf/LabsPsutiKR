@@ -18,17 +18,17 @@
 
                 </MenuItem>
                 <MenuItem Header="Расчет критериев">
-                    <MenuItem Header="Максимальный элемент массива"/>
-                    <MenuItem Header="минимальный элемент массива"/>
-                    <MenuItem Header="сумма всех элементов массива"/>
-                    <MenuItem Header="произведение всех элементов массива"/>
-                    <MenuItem Header="сумма всех отрицательных элементов массива,"/>
-                    <MenuItem Header="произведение всех отрицательных элементов массива"/>
-                    <MenuItem Header="сумма всех положительных элементов массива"/>
-                    <MenuItem Header="произведение всех положительных элементов массива"/>
+                    <MenuItem Header="Максимальный элемент массива" Command="{Binding MaxItemArrayCommand}"/>
+                    <MenuItem Header="минимальный элемент массива" Command="{Binding MinItemArrayCommand}"/>
+                    <MenuItem Header="сумма всех элементов массива" Command="{Binding SumItemsArrayCommand}" />
+                    <MenuItem Header="произведение всех элементов массива" Command="{Binding MultipleItemsArrayCommand}"/>
+                    <MenuItem Header="сумма всех отрицательных элементов массива," Command="{Binding SumNegativeItemsArrayCommand}"/>
+                    <MenuItem Header="произведение всех отрицательных элементов массива" Command="{Binding MultipleNegativeItemsArrayCommand}"/>
+                    <MenuItem Header="сумма всех положительных элементов массива" Command="{Binding SumPositiveItemsArrayCommand}"/>
+                    <MenuItem Header="произведение всех положительных элементов массива" Command="{Binding MultiplePsotiveItemsArrayCommand}"/>
                     <MenuItem Header="--"/>
-                    <MenuItem Header="Вывод всех положительных элементов массив"/>
-                    <MenuItem Header="Вывод всех отрицательных элементов массива"/>
+                    <MenuItem Header="Вывод всех положительных элементов массив" Command="{Binding SortPositiveArrayCommand}"/>
+                    <MenuItem Header="Вывод всех отрицательных элементов массива"  Command="{Binding SortNegativeArrayCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Критерии">
 
@@ -68,6 +68,7 @@
                                     UpdateSourceTrigger=PropertyChanged}"
                                  >
                         </ListBox>
+                        
                         <TextBlock Text="Y: "/>
 
                         <ListBox Height="220" Width="189"
@@ -84,8 +85,9 @@
                     <StackPanel Margin="25 0 0 0"
                                 Width="300"
                                 Orientation="Vertical">
-                        <TextBlock Text="Результаты"/>
+                        <TextBlock Text="{Binding TextResult}"/>
                         <ListBox Width="300"
+                                 ItemsSource="{Binding SortArray}"
                                  Height="355">
                             
                         </ListBox>
