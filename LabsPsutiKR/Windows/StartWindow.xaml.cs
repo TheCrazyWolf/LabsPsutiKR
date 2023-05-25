@@ -22,10 +22,15 @@ namespace LabsPsutiKR
     /// </summary>
     public partial class MainWindow : Window
     {
+        private StartWindowViewModel _Vm;
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new StartWindowViewModel();
+            _Vm = new StartWindowViewModel();
+            DataContext = _Vm;
+
+            _Vm._eventWindowClose = new Action(Close);
+
         }
 
         protected override void OnClosing(CancelEventArgs e)

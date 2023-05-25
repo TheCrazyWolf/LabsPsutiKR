@@ -8,42 +8,58 @@
         xmlns:ui="http://schemas.modernwpf.com/2019" xmlns:viewmodel="clr-namespace:LabsPsutiKR.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:StartWindowViewModel}"
         ui:WindowHelper.UseModernWindowStyle="True"
         Title="MainWindow" Height="490" Width="800"
-        ResizeMode="NoResize"
+      
         >
     <Grid>
         <StackPanel Orientation="Vertical">
 
             <Menu VerticalAlignment="Top">
                 <MenuItem Header="Файл">
-
+                    <MenuItem Header="Открыть" 
+                              Command="{Binding OpenDataCommand}"/>
+                    <MenuItem Header="Сохранить" 
+                              Command="{Binding SaveDataCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Расчет критериев">
-                    <MenuItem Header="Максимальный элемент массива" Command="{Binding MaxItemArrayCommand}"/>
-                    <MenuItem Header="минимальный элемент массива" Command="{Binding MinItemArrayCommand}"/>
-                    <MenuItem Header="сумма всех элементов массива" Command="{Binding SumItemsArrayCommand}" />
-                    <MenuItem Header="произведение всех элементов массива" Command="{Binding MultipleItemsArrayCommand}"/>
-                    <MenuItem Header="сумма всех отрицательных элементов массива," Command="{Binding SumNegativeItemsArrayCommand}"/>
-                    <MenuItem Header="произведение всех отрицательных элементов массива" Command="{Binding MultipleNegativeItemsArrayCommand}"/>
-                    <MenuItem Header="сумма всех положительных элементов массива" Command="{Binding SumPositiveItemsArrayCommand}"/>
-                    <MenuItem Header="произведение всех положительных элементов массива" Command="{Binding MultiplePsotiveItemsArrayCommand}"/>
+                    <MenuItem Header="Максимальный элемент массива" 
+                              Command="{Binding MaxItemArrayCommand}"/>
+                    <MenuItem Header="минимальный элемент массива" 
+                              Command="{Binding MinItemArrayCommand}"/>
+                    <MenuItem Header="сумма всех элементов массива" 
+                              Command="{Binding SumItemsArrayCommand}" />
+                    <MenuItem Header="произведение всех элементов массива" 
+                              Command="{Binding MultipleItemsArrayCommand}"/>
+                    <MenuItem Header="сумма всех отрицательных элементов массива," 
+                              Command="{Binding SumNegativeItemsArrayCommand}"/>
+                    <MenuItem Header="произведение всех отрицательных элементов массива" 
+                              Command="{Binding MultipleNegativeItemsArrayCommand}"/>
+                    <MenuItem Header="сумма всех положительных элементов массива" 
+                              Command="{Binding SumPositiveItemsArrayCommand}"/>
+                    <MenuItem Header="произведение всех положительных элементов массива" 
+                              Command="{Binding MultiplePsotiveItemsArrayCommand}"/>
                     <MenuItem Header="--"/>
-                    <MenuItem Header="Вывод всех положительных элементов массив" Command="{Binding SortPositiveArrayCommand}"/>
-                    <MenuItem Header="Вывод всех отрицательных элементов массива"  Command="{Binding SortNegativeArrayCommand}"/>
+                    <MenuItem Header="Вывод всех положительных элементов массив" 
+                              Command="{Binding SortPositiveArrayCommand}"/>
+                    <MenuItem Header="Вывод всех отрицательных элементов массива"  
+                              Command="{Binding SortNegativeArrayCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Критерии">
 
                 </MenuItem>
-                <MenuItem Header="Выход">
+                <MenuItem Header="Выход" Command="{Binding CloseThisWindowCommand}">
 
                 </MenuItem>
-                <MenuItem Header="О программе"/>
+                <MenuItem Header="О программе" Command="{Binding ShowAboutWindowsCommand}"/>
             </Menu>
 
             <StackPanel Orientation="Horizontal">
                 <StackPanel Margin="25 0 0 0" Orientation="Vertical">
                     <TextBlock Text="Введите значение A"/>
                     <TextBox Text="{Binding SelectedValueA}" />
-                    <TextBlock Text="# Задания"/>
+                    
+                    <!--
+                    
+                                        <TextBlock Text="# Задания"/>
                     <ComboBox
                         Width="400"
                         ItemsSource="{Binding ListTasks}" 
@@ -51,6 +67,8 @@
                                 UpdateSourceTrigger=PropertyChanged}"
                              >
                     </ComboBox>
+                    
+                    -->
 
                     <Button Margin="0 5 0 0" 
                             Width="400"
@@ -62,7 +80,7 @@
                                 Width="400"
                                 Orientation="Horizontal">
                         <TextBlock Text="X: "/>
-                        <ListBox Height="220" Width="185"
+                        <ListBox Height="275" Width="185"
                                  ItemsSource="{Binding ArrayX,
                                     NotifyOnSourceUpdated=True,
                                     UpdateSourceTrigger=PropertyChanged}"
@@ -71,7 +89,7 @@
                         
                         <TextBlock Text="Y: "/>
 
-                        <ListBox Height="220" Width="189"
+                        <ListBox Height="275" Width="189"
                                  ItemsSource="{Binding ArrayY,
                                     NotifyOnSourceUpdated=True,
                                     UpdateSourceTrigger=PropertyChanged}">
@@ -85,7 +103,7 @@
                     <StackPanel Margin="25 0 0 0"
                                 Width="300"
                                 Orientation="Vertical">
-                        <TextBlock Text="{Binding TextResult}"/>
+                        <TextBlock Text="{Binding TextResult, UpdateSourceTrigger=PropertyChanged}"/>
                         <ListBox Width="300"
                                  ItemsSource="{Binding SortArray}"
                                  Height="355">

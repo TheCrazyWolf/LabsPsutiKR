@@ -1,10 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LabsPsutiKR.Model;
+using LabsPsutiKR.Windows;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -28,17 +33,26 @@ namespace LabsPsutiKR.ViewModel
         [ObservableProperty] private string textResult = "Результат пол или отриц чисел";
         [ObservableProperty] private ObservableCollection<double> sortArray;
 
+        public Action _eventWindowClose;
+
         public StartWindowViewModel()
         {
             ListTasks = new int[] { 3 };
+        }
 
-            arrayY = new();
-            arrayX = new();
+        [RelayCommand]
+        private void CloseThisWindow()
+        {
+            _eventWindowClose();
         }
 
         [RelayCommand]
         private void DoResult()
         {
+
+            ArrayX = new();
+            ArrayY = new();
+
             double start = 0.0; // Начальное значение диапазона x
             double end = 5.0; // Конечное значение диапазона x
             double step = 0.5; // Шаг
@@ -52,8 +66,8 @@ namespace LabsPsutiKR.ViewModel
                 if (double.IsNaN(x) || double.IsNaN(y))
                     continue;
 
-                arrayX.Add(x);
-                arrayY.Add(y);
+                ArrayX.Add(x);
+                ArrayY.Add(y);
                
             }
         }
@@ -167,7 +181,7 @@ namespace LabsPsutiKR.ViewModel
         [RelayCommand]
         private void SortPositiveArray()
         {
-            textResult = "Пол элементы массива";
+            TextResult = "Пол элементы массива";
             var s = ServiceTwoListToOne(ArrayX, ArrayY).Where(x => x >= 0).Order().ToList();
             SortArray = new();
             foreach (var item in s)
@@ -179,7 +193,7 @@ namespace LabsPsutiKR.ViewModel
         [RelayCommand]
         private void SortNegativeArray()
         {
-            textResult = "Пол элементы массива";
+            TextResult = "Пол элементы массива";
             var s = ServiceTwoListToOne(ArrayX, ArrayY).Where(x => x <= 0).Order().ToList();
             SortArray = new();
             foreach (var item in s)
@@ -188,6 +202,62 @@ namespace LabsPsutiKR.ViewModel
             }
         }
 
+
+        [RelayCommand]
+        private void ShowAboutWindows()
+        {
+            new About().ShowDialog();
+        }
+
+        [RelayCommand]
+        private void SaveData()
+        {
+            ModelData data = new ModelData()
+            {
+                arrayX = ArrayX,
+                arrayY = ArrayY,
+                selectedValueA = SelectedValueA,
+                sortArray = SortArray
+            };
+
+            var json = JsonSerializer.Serialize(data);
+
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Filter = "Text File (*.json)|*.json|Show All Files (*.*)|*.*",
+                FileName = "Untitled",
+            };
+
+            dialog.ShowDialog();
+
+            File.WriteAllText(dialog.FileName, json);
+        }
+
+
+        [RelayCommand]
+        private void OpenData()
+        {
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                Filter = "Text File (*.json)|*.json|Show All Files (*.*)|*.*",
+            };
+
+            dialog.ShowDialog();
+            try
+            {
+                var json = File.ReadAllText(dialog.FileName);
+                ModelData obj = JsonSerializer.Deserialize<ModelData>(json);
+                ArrayX = obj.arrayX;
+                ArrayY = obj.arrayY;
+                SortArray = obj.sortArray;
+                SelectedValueA = obj.selectedValueA;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при открытии файла");
+;            }
+                         
+        }
 
         private ObservableCollection<double> ServiceTwoListToOne(ObservableCollection<double> one, 
             ObservableCollection<double> two)
